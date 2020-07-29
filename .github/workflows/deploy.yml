@@ -3,18 +3,18 @@
 
 name: Test and Deploy
 
-# Run this workflow on every push or pull request
-on:
-  - push
-  - pull_request
+# Uncomment to run this workflow on every push or pull request
+#on:
+#  - push
+#  - pull_request
 
-# Uncomment to run this workflow only when a tag is pushed
+# Run this workflow only when a tag is pushed
 # Can set custom wildcards instead of '*', like 'v*' for tags starting with v
 # NOTE: Releases are only published on tags, see "Release" step below
-#on:
-#  push:
-#    tags:
-#      - '*'
+on:
+  push:
+    tags:
+      - '*'
 
 # Docs on sharing data between jobs (between VMs): https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts#passing-data-between-jobs-in-a-workflow
 jobs:
@@ -27,9 +27,6 @@ jobs:
         python-version: [3.8]
 
     steps:
-      # Download the repository
-      - uses: actions/checkout@v2
-
       # Setup Python
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
