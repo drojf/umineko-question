@@ -58,7 +58,7 @@ jobs:
           files: |
             script-full.7z
             script-voice-only.7z
-          body_path: github_actions_changelog_template.txt
+          body_path: ./master/github_actions_changelog_template.txt
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
