@@ -27,17 +27,14 @@ jobs:
         python-version: [3.8]
 
     steps:
+      # Download the repository
+      - uses: actions/checkout@v2
+
       # Setup Python
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-
-      # Download necessary files (as we are not cloing the repo)
-      - name: Download Deploy Script
-        run: |
-          curl -L -O "https://github.com/drojf/umineko-question/raw/github_actions_test/deploy.py"
-          curl -L -O "https://github.com/drojf/umineko-question/raw/github_actions_test/github_actions_changelog_template.txt"
 
       # Run Python Deploy Script
       - name: Run Deploy Script
