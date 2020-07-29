@@ -29,16 +29,38 @@ jobs:
     steps:
       # Download the repository
       - uses: actions/checkout@v2
-
-      # Setup Python
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.python-version }}
+          ref: master
+          path: master
 
-      # Run Python Deploy Script
+      # Run  Deploy Script
       - name: Run Deploy Script
-        run: python deploy.py
+        run: |
+          cp ./master/InDevelopment/ManualUpdates/0.utf temp/full-temp/0.u
+          7z a script-voice-only.7z temp/full-temp/*
+
+      # Download the repository
+      - uses: actions/checkout@v2
+        with:
+          ref: voice_only
+          path: voice_only
+
+      # Run  Deploy Script
+      - name: Run Deploy Script
+        run: |
+          cp ./voice_only/InDevelopment/ManualUpdates/0.utf temp/voice-only-temp/0.u
+          7z a script-voice-only.7z temp/voice-only-temp/*
+
+#
+#      # Setup Python
+#      - name: Set up Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v1
+#        with:
+#          python-version: ${{ matrix.python-version }}
+#
+#      # Run Python Deploy Script
+#      - name: Run Deploy Script
+#        run: python deploy.py
 
       # Publish a release
       # For more info on options see: https://github.com/softprops/action-gh-release
