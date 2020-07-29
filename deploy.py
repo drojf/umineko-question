@@ -35,8 +35,6 @@ def download(url, output_path):
 
 
 def create_umineko_script_zip(branch, script_path, output_path):
-	call(["git", "checkout", branch])
-
 	temp_folder = tempfile.mkdtemp()
 
 	shutil.copy(script_path, os.path.join(temp_folder, '0.u'))
@@ -48,6 +46,8 @@ def create_umineko_script_zip(branch, script_path, output_path):
 
 print(f"Start Umineko Question Build: Python {sys.version}")
 print(f"Script running from {os.getcwd()}")
+
+
 
 create_umineko_script_zip('master', 'InDevelopment/ManualUpdates/0.utf', 'script-full.7z')
 create_umineko_script_zip('voice_only', 'InDevelopment/ManualUpdates/0.utf', 'script-voice-only.7z')
