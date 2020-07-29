@@ -1,0 +1,55 @@
+# Useful Links
+# Python with Github Actions: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Test and Deploy
+
+# Run this workflow on every push or pull request
+on:
+  - push
+  - pull_request
+
+# Uncomment to run this workflow only when a tag is pushed
+# Can set custom wildcards instead of '*', like 'v*' for tags starting with v
+# NOTE: Releases are only published on tags, see "Release" step below
+#on:
+#  push:
+#    tags:
+#      - '*'
+
+# Docs on sharing data between jobs (between VMs): https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts#passing-data-between-jobs-in-a-workflow
+jobs:
+  # Linux/Mac Build
+  linux_mac_build:
+    name: Linux and Mac Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      # Download the repository
+      - uses: actions/checkout@v2
+
+      # Setup Python
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Run Python Deploy Script
+      - name: Run Deploy Script
+        run: python deploy.py
+
+      # Publish a release
+      # For more info on options see: https://github.com/softprops/action-gh-release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/') # only publish tagged commits
+        with:
+          files: |
+            output/script-full.zip
+            output/script-voice-only.zip
+          body_path: github_actions_changelog_template.txt
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
