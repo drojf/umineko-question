@@ -35,7 +35,7 @@ jobs:
 
       # Run Python Deploy Script
       - name: Download Deploy Script
-        run: curl -L "https://github.com/drojf/umineko-question/raw/github_actions_test/deploy.py"
+        run: curl -L -O "https://github.com/drojf/umineko-question/raw/github_actions_test/deploy.py"
 
       # Run Python Deploy Script
       - name: Run Deploy Script
