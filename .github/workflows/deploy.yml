@@ -20,32 +20,32 @@ on:
 jobs:
   # Linux/Mac Build
   linux_mac_build:
-    name: Linux and Mac Build
+    name: Deploy Umineko Question Scripts
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.8]
 
     steps:
-      # Download the repository
+      # Download the 'master/full' script repo
       - uses: actions/checkout@v2
         with:
           ref: master
           path: master
 
-      # Download the repository
+      # Download the 'voice_only' script repo
       - uses: actions/checkout@v2
         with:
           ref: voice_only
           path: voice_only
 
-      # Run  Deploy Script
+      # Run Deploy Script
       - name: Run Deploy Script
         run: |
           mkdir ./full-temp
           mkdir ./voice-temp
           cp ./master/InDevelopment/ManualUpdates/0.utf ./full-temp/0.u
-          7z a script-voice-only.7z ./full-temp/*
+          7z a script-full.7z ./full-temp/*
           cp ./voice_only/InDevelopment/ManualUpdates/0.utf ./voice-temp/0.u
           7z a script-voice-only.7z ./voice-temp/*
 
