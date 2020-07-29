@@ -51,8 +51,8 @@ jobs:
         with:
           files: |
             test.txt
-            ./output/script-full.zip
-            ./output/script-voice-only.zip
+            script-full.zip
+            script-voice-only.zip
           body_path: github_actions_changelog_template.txt
           draft: true
         env:
