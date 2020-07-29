@@ -42,22 +42,12 @@ jobs:
       # Run  Deploy Script
       - name: Run Deploy Script
         run: |
-          mkdir ./temp
-          cp ./master/InDevelopment/ManualUpdates/0.utf ./temp/full-temp/0.u
-          7z a script-voice-only.7z temp/full-temp/*
-          cp ./voice_only/InDevelopment/ManualUpdates/0.utf ./temp/voice-only-temp/0.u
-          7z a script-voice-only.7z temp/voice-only-temp/*
-
-#
-#      # Setup Python
-#      - name: Set up Python ${{ matrix.python-version }}
-#        uses: actions/setup-python@v1
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      # Run Python Deploy Script
-#      - name: Run Deploy Script
-#        run: python deploy.py
+          mkdir ./full-temp
+          mkdir ./voice-temp
+          cp ./master/InDevelopment/ManualUpdates/0.utf ./full-temp/0.u
+          7z a script-voice-only.7z ./full-temp/*
+          cp ./voice_only/InDevelopment/ManualUpdates/0.utf ./voice-temp/0.u
+          7z a script-voice-only.7z ./voice-temp/*
 
       # Publish a release
       # For more info on options see: https://github.com/softprops/action-gh-release
