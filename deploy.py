@@ -44,20 +44,8 @@ def create_umineko_script_zip(url, output_path):
 
 	print(f"Archive saved to: {os.path.abspath(output_path)}")
 
-f = open("test.txt", "a")
-f.write("Now the file has more content!")
-f.close()
-
 print(f"Start Umineko Question Build: Python {sys.version}")
 print(f"Script running from {os.getcwd()}")
 
 create_umineko_script_zip('https://github.com/07th-mod/umineko-question/raw/master/InDevelopment/ManualUpdates/0.utf', 'script-full.7z')
 create_umineko_script_zip('https://github.com/07th-mod/umineko-question/raw/voice_only/InDevelopment/ManualUpdates/0.utf', 'script-voice-only.7z')
-
-print("contents of .")
-for file in os.listdir('.'):
-	print(file)
-
-print("contents of output")
-for file in os.listdir('./output'):
-	print(file)
