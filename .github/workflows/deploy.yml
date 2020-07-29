@@ -50,6 +50,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') # only publish tagged commits
         with:
           files: |
+            test.txt
             ./output/script-full.zip
             ./output/script-voice-only.zip
           body_path: github_actions_changelog_template.txt

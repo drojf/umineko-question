@@ -44,7 +44,9 @@ def create_umineko_script_zip(url, output_path):
 
 	print(f"Archive saved to: {os.path.abspath(output_path)}")
 
-
+f = open("test.txt", "a")
+f.write("Now the file has more content!")
+f.close()
 
 print(f"Start Umineko Question Build: Python {sys.version}")
 print(f"Script running from {os.getcwd()}")
