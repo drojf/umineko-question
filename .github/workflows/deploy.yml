@@ -1,0 +1,64 @@
+# Useful Links
+# Python with Github Actions: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Test and Deploy
+
+# Uncomment to run this workflow on every push or pull request
+#on:
+#  - push
+#  - pull_request
+
+# Run this workflow only when a tag is pushed
+# Can set custom wildcards instead of '*', like 'v*' for tags starting with v
+# NOTE: Releases are only published on tags, see "Release" step below
+on:
+  push:
+    tags:
+      - '*'
+
+# Docs on sharing data between jobs (between VMs): https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts#passing-data-between-jobs-in-a-workflow
+jobs:
+  # Linux/Mac Build
+  linux_mac_build:
+    name: Linux and Mac Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      # Download the repository
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          path: master
+
+      # Download the repository
+      - uses: actions/checkout@v2
+        with:
+          ref: voice_only
+          path: voice_only
+
+      # Run  Deploy Script
+      - name: Run Deploy Script
+        run: |
+          mkdir ./full-temp
+          mkdir ./voice-temp
+          cp ./master/InDevelopment/ManualUpdates/0.utf ./full-temp/0.u
+          7z a script-voice-only.7z ./full-temp/*
+          cp ./voice_only/InDevelopment/ManualUpdates/0.utf ./voice-temp/0.u
+          7z a script-voice-only.7z ./voice-temp/*
+
+      # Publish a release
+      # For more info on options see: https://github.com/softprops/action-gh-release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/') # only publish tagged commits
+        with:
+          files: |
+            script-full.7z
+            script-voice-only.7z
+          body_path: ./master/github_actions_changelog_template.txt
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
